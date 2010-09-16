@@ -1,0 +1,14 @@
+# SCREEN EXAMPLE TERMFILE
+# by adding 'screen:' under the tab name, a gnu-screen session will be opened
+# and any nested items will be opened in separate screen windows
+# NOTE: currently, screen must be the only item directly under the tab name
+---
+- tab1:
+  - ls
+- tab2:
+  - screen:
+    - ls
+- tab3:
+  - screen:
+    - pwd
+    - ls

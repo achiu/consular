@@ -32,6 +32,11 @@ module Terminitor
       system("#{editor || 'open'} #{path}")
     end
 
+		def new_screen_tab
+			app("System Events").application_processes["Terminal.app"].keystroke("a", :using => :control_down)
+			app("System Events").application_processes["Terminal.app"].keystroke("c")
+		end
+
     # returns path to file
     # resolve_path 'my_project'
     def resolve_path(project)
