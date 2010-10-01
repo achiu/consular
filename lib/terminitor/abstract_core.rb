@@ -31,10 +31,24 @@ module Terminitor
         tab = open_tab
         commands.insert(0,  "cd \"#{@working_dir}\"") unless @working_dir.to_s.empty?
         commands.each do |cmd|
-          execute_command(cmd, :in => tab)
+					if cmd.respond_to?(:key?) && cmd.key?('screen')
+						execute_command('screen', :in => tab) # start screen
+						execute_in_screen(cmd.values, :in => tab)
+					else
+						execute_command(cmd, :in => tab)
+					end
         end
       end
     end
+
+		# run commands inside a GNU Screen session
+		def execute_in_screen(commands, options = {})
+			commands = commands.first
+			commands.each do |cmd|
+				execute_command(cmd, options) 
+				create_screen_window unless cmd == commands.last
+			end
+		end
 
     # Loads commands via the termfile and returns them as a hash
     # if it matches legacy yaml, parse as yaml, else use new dsl
