@@ -1,0 +1,6 @@
+# Terminitor Termfile
+window do
+	tab do
+		screen 'ls', 'uname'
+	end
+end
