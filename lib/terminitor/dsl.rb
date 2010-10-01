@@ -55,6 +55,14 @@ module Terminitor
       end
     end
 
+    # opens a gnu-screen session inside a tab context
+		# tab {
+		#		screen 'vi my_file.txt', 'git status'
+		# }
+		def screen(*commands)
+			@_context  << {'screen' => commands}
+		end
+
     # Returns yaml file as Terminitor formmatted hash
     def to_hash
       { :setup => @setup, :windows => @windows }
