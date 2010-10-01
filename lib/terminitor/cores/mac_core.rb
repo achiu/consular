@@ -74,6 +74,14 @@ module Terminitor
     def set_window_title(window, title)
       window.custom_title.set(title)
     end
+
+
+		# create a new window inside a GNU Screen session
+		# by issuing the C-a c command
+		def create_screen_window
+			app("System Events").application_processes["Terminal.app"].keystroke("a", :using => :control_down)
+			app("System Events").application_processes["Terminal.app"].keystroke("c")
+		end
     
   end
 end

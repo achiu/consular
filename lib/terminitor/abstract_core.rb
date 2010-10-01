@@ -64,5 +64,9 @@ module Terminitor
     def open_window
     end
 
+		# create a new window inside a GNU Screen session
+		def create_screen_window
+		end
+
   end
 end
