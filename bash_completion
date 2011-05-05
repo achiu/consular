@@ -1,0 +1,30 @@
+_terminitor() 
+{
+    local cur prev opts base
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    #
+    #  The basic options we'll complete.
+    #
+    opts="create delete edit fetch help init list open setup start update"
+
+
+    #
+    #  Complete the arguments to some of the basic commands.
+    #
+    case "${prev}" in
+    start)
+      local running=$(for x in `terminitor list | egrep -e '^  \* ' | awk '{ print $2 }'`; do echo ${x} ; done )
+      COMPREPLY=( $(compgen -W "${running}" -- ${cur}) )
+      return 0
+      ;;
+    *)
+      ;;
+    esac
+
+   COMPREPLY=($(compgen -W "${opts}" -- ${cur}))  
+   return 0
+}
+complete -F _terminitor terminitor
