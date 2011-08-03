@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path("../lib/terminitor/version", __FILE__)
+require 'rbconfig'
 
 Gem::Specification.new do |s|
   s.name        = "terminitor"
@@ -15,7 +16,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = "terminitor"
   
   # Platform Specific Dependencies
-  case RUBY_PLATFORM.downcase
+  case Config::CONFIG['host_os'].downcase
   when %r{darwin}
     s.add_dependency "rb-appscript", "~>0.6.1"
   when %r{linux}
