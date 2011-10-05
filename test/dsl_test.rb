@@ -5,7 +5,7 @@ context "Dsl" do
   asserts_topic.assigns :setup
   asserts_topic.assigns :windows
   asserts_topic.assigns :_context
- 
+
   context "to_hash" do
     setup { topic.to_hash }
     asserts(:[],:setup).equals ["echo \"setup\""]
@@ -93,7 +93,7 @@ context "with panes" do
   asserts_topic.assigns :setup
   asserts_topic.assigns :windows
   asserts_topic.assigns :_context
- 
+
   context "creates correct hash" do
     setup { topic.to_hash }
 

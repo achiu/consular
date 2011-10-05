@@ -1,7 +1,8 @@
 lib_dir = File.expand_path("..", __FILE__)
 $:.unshift( lib_dir ) unless $:.include?( lib_dir )
-      
+
 require 'terminitor/yaml'
+require 'terminitor/ordered_hash'
 require 'terminitor/dsl'
 require 'terminitor/runner'
 require 'terminitor/abstract_core'

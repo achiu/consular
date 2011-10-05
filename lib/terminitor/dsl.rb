@@ -6,7 +6,7 @@ module Terminitor
     def initialize(path)
       file = File.read(path)
       @setup    = []
-      @windows  = { 'default' => {:tabs => {'default' =>{:commands=>[]}}}}
+      @windows  = Terminitor::OrderedHash['default', new_window_contents]
       @_context = @windows['default']
       instance_eval(file)
     end
@@ -34,7 +34,7 @@ module Terminitor
     #   window { tab('ls', 'gitx') }
     def window(options = {}, &block)
       window_name     = "window#{@windows.keys.size}"
-      window_contents = @windows[window_name] = {:tabs => {'default' => {:commands =>[]}}}
+      window_contents = @windows[window_name] = new_window_contents
       window_contents[:options] = options unless options.empty?
       in_context window_contents, &block
     end
@@ -83,7 +83,7 @@ module Terminitor
       tabs     = @_context[:tabs]
       tab_name = "tab#{tabs.keys.size}"
       if block_given?
-        tab_contents = tabs[tab_name] = {:commands => []}
+        tab_contents = tabs[tab_name] = new_tab_contents
 
         options = {}
         options = args.pop          if args.last.is_a? Hash
@@ -107,11 +107,11 @@ module Terminitor
     #   pane "top"
     #   pane { pane "uptime" }
     def pane(*args, &block)
-      @_context[:panes] = {} unless @_context.has_key? :panes 
+      @_context[:panes] = {} unless @_context.has_key? :panes
       panes = @_context[:panes]
       pane_name = "pane#{panes.keys.size}"
       if block_given?
-        pane_contents = panes[pane_name] = {:commands => []}
+        pane_contents = panes[pane_name] = new_tab_contents
         if @_context.has_key? :is_first_lvl_pane
           # after in_context  we should be able to access
           # @_context and @_old_context as before
@@ -135,6 +135,14 @@ module Terminitor
     end
 
     private
+
+    def new_window_contents
+      { :tabs => Terminitor::OrderedHash['default', new_tab_contents] }
+    end
+
+    def new_tab_contents
+      { :commands => [] }
+    end
 
     # in_context @setup, &block
     # in_context @tabs["name"], &block
