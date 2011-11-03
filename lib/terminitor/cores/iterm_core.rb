@@ -193,11 +193,11 @@ module Terminitor
     end
 
     def split_v
-      call_ui_action("Shell", nil, "Split Vertically With Same Profile")
+      call_ui_action("Shell", nil, "Split Vertically With Current Profile")
     end
 
     def split_h
-      call_ui_action("Shell", nil, "Split Horizontally With Same Profile")
+      call_ui_action("Shell", nil, "Split Horizontally With Current Profile")
     end
 
     # to select panes; iTerm's Appscript select method does not work
